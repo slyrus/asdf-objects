@@ -2,7 +2,7 @@
 (in-package :asdf-objects)
 
 ;;; generate-op
-(defclass generate-op (asdf:operation) ())
+(defclass generate-op (asdf:downward-operation) ())
 
 ;;; generated-component for components that generate files
 (defclass generated-component (asdf:component) ())
