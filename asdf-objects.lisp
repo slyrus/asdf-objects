@@ -40,7 +40,7 @@
 
 (defun get-sibling-component (comp sib)
   (asdf:find-component (asdf:component-parent comp)
-                       (asdf/find-system:coerce-name sib)))
+                       (asdf:coerce-name sib)))
 
 (defclass object-component (generated-component)
   ((symbol :accessor object-symbol :initarg :symbol)))
@@ -114,17 +114,17 @@
 
 (defmethod component-depends-on ((op generate-op) (c object-from-variable))
   (append (call-next-method)
-          `((load-op , (asdf/find-system:coerce-name (object-input-object c))))))
+          `((load-op , (asdf:coerce-name (object-input-object c))))))
 
 (defmethod component-depends-on ((op compile-op) (c object-from-variable))
   (append (call-next-method)
-          `((load-op ,(asdf/find-system:coerce-name (object-input-object c))))))
+          `((load-op ,(asdf:coerce-name (object-input-object c))))))
 
 (defmethod operation-done-p ((o generate-op) (c object-from-variable))
   (let ((input-object-last-load-time
          (asdf:component-property
           (find-component (component-parent c)
-                          (asdf/find-system:coerce-name (object-input-object c)))
+                          (asdf:coerce-name (object-input-object c)))
           'last-loaded))
         (my-last-generate-time (asdf:component-property c 'last-generated)))
     (and input-object-last-load-time
@@ -152,7 +152,7 @@
        (symbol-value
         (object-symbol
          (find-component (component-parent c)
-                         (asdf/find-system:coerce-name (object-input-object c)))))))
+                         (asdf:coerce-name (object-input-object c)))))))
   (setf (symbol-value (object-symbol c)) sexp)))
 
 (defmethod perform ((op compile-op) (c object-from-variable))
